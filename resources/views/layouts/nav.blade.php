@@ -1,40 +1,43 @@
-<div class="container is-mobile is-centered">
-      <div class="is-flex is-horizontal-centered">
-      <nav class="navbar double-bordered-navbar is-full-width" role="navigation" aria-label="main navigation">
+<nav class="navbar is-primary has-shadow is-spaced is-family-secondary is-capitalized is-size-5 has-text-weight-semi-bold" role="navigation" aria-label="main navigation">
+    <div class="container">
         <div class="navbar-brand">
-            <!-- Mobile menu -->
-            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-              <span aria-hidden="true"></span>
-              <span aria-hidden="true"></span>
-              <span aria-hidden="true"></span>
+            <a class="navbar-item" href="/">
+                <img src="/img/logo.png" width="112" height="28">
+            </a>
+
+            <div class="navbar-divider"></div>
+
+            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
             </a>
         </div>
 
-          <div class="level is-full-width">
-            <a class="navbar-item is-active has-text-centered level-item" href="/documentation">
-              <span>
-                Recensies
-              </span>
-            </a>
+        <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start ">
+                <a class="navbar-item">
+                    Recensies
+                </a>
 
-            <a class="navbar-item is-active has-text-centered level-item" href="/documentation">
-              <span>
-                Winnen
-              </span>
-            </a>
+                <a class="navbar-item">
+                    Winnen
+                </a>
 
-            <a class="navbar-item has-text-centered level-item">
-              <span>
-                Over mij
-              </span>
-            </a>
+                <a class="navbar-item">
+                    Over mij
+                </a>
 
-            <a class="navbar-item is-active has-text-centered level-item" href="/documentation">
-              <span>
-                Contact/PR
-              </span>
+                <a class="navbar-item">
+                    Contact
+                </a>
+            </div>
+        </div>
+
+        <div class="navbar-end">
+            <a class="navbar-item">
+                <i class="fas fa-facebook"></i>
             </a>
-          </div>
-      </nav>
+        </div>
     </div>
-</div>
+</nav>
