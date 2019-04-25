@@ -1,6 +1,10 @@
-@import '../../node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss';
 @import 'variables';
 @import 'helpers';
 @import 'layout';
 @import 'bulma_vars';
 @import '../../node_modules/bulma/bulma.sass';
+// Fontawesome
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+@import '~@fortawesome/fontawesome-free/scss/regular';
+@import '~@fortawesome/fontawesome-free/scss/solid';
+@import '~@fortawesome/fontawesome-free/scss/brands';
