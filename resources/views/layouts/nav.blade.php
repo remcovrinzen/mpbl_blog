@@ -16,7 +16,7 @@
 
         <div id="navbarBasicExample" class="navbar-menu">
             <div class="navbar-start ">
-                <a class="navbar-item left">
+                <a class="navbar-item left" href="/recensies">
                     Recensies
                 </a>
 
