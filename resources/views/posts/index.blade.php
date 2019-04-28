@@ -1,3 +1,3 @@
 @extends ('layouts.app')
 
-{{ Breadcrumbs::render('recensies') }}
+{{ Breadcrumbs::render('posts') }}

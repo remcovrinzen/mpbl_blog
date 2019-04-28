@@ -5,8 +5,8 @@ Breadcrumbs::for('index', function ($trail) {
     $trail->push('Home', route('index'));
 });
 
-// Index > Recensies
-Breadcrumbs::for('recensies', function ($trail) {
+// Index > Posts
+Breadcrumbs::for('posts', function ($trail) {
     $trail->parent('index');
-    $trail->push('Recensies', route('recensies'));
+    $trail->push('Posts', route('posts'));
 });

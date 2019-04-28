@@ -16,8 +16,8 @@
 
         <div id="navbarBasicExample" class="navbar-menu">
             <div class="navbar-start ">
-                <a class="navbar-item left" href="/recensies">
-                    Recensies
+                <a class="navbar-item left" href="/posts">
+                    Posts
                 </a>
 
                 <a class="navbar-item left">
@@ -49,6 +49,10 @@
 
             <a class="navbar-item" href="https://www.bloglovin.com/blogs/myperfectbooklife-12557029?widget-ref=https://myperfectbooklife.blogspot.com/" target="_blank">
                 <img src="/img/icons/bloglovin.svg" class="custom-icon" style="background:white"></img>
+            </a>
+
+            <a class="navbar-item" href="https://www.youtube.com/channel/UCIIt_Sm2mZMxu4ZGnNARP2w" target="_blank">
+                <img src="/img/icons/youtube.png" class="custom-icon"></img>
             </a>
         </div>
     </div>

@@ -24,4 +24,4 @@ Route::get('/admin/login', 'Auth\LoginController@showLoginForm')->name('login');
 // Route::post('/admin/login', 'Auth\LoginController@login');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
-Route::get('/recensies', 'PostController@index')->name('recensies');
+Route::get('/posts', 'PostController@index')->name('posts');
