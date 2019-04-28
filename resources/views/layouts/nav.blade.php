@@ -20,15 +20,11 @@
                     Posts
                 </a>
 
-                <a class="navbar-item left">
-                    Winnen
-                </a>
-
-                <a class="navbar-item left">
+                <a class="navbar-item left" href="/overmij">
                     Over mij
                 </a>
 
-                <a class="navbar-item left">
+                <a class="navbar-item left" href="/contact">
                     Contact
                 </a>
             </div>
