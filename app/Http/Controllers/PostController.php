@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class PostController extends Controller
 {
@@ -14,7 +15,14 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view('posts.index');
+        $now = Carbon::now()->toDateTimeString();
+
+        $posts = Post::where('published', '<=', $now)
+            ->take(20)
+            ->orderBy('published', 'desc')
+            ->get();
+
+        return view('posts.index', ['posts' => $posts]);
     }
 
     /**

@@ -1,3 +1,7 @@
 @extends ('layouts.app')
 
-{{ Breadcrumbs::render('posts') }}
+@section('content')
+    <!-- {{ Breadcrumbs::render('posts') }} -->
+
+    {{ $posts }}
+@endsection
