@@ -1,6 +1,12 @@
 @import 'variables';
 @import 'helpers';
 @import 'layout';
+
+@font-face {
+    font-family: 'Bebas Neue';
+    src: url('fonts/BebasNeue-Regular.ttf') format('truetype');
+}
+
 @import 'bulma_vars';
 @import '../../node_modules/bulma/bulma.sass';
 // Fontawesome
