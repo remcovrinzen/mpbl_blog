@@ -9,6 +9,7 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 import Buefy from 'buefy';
+import StarRating from 'vue-star-rating';
 
 /**
  * The following block of code may be used to automatically register your
@@ -23,6 +24,7 @@ import Buefy from 'buefy';
 
 Vue.use(Buefy);
 
+Vue.component('star-rating', StarRating);
 Vue.component('post-teaser', require('./components/PostTeaser.vue').default);
 Vue.component('post-list', require('./components/PostList.vue').default);
 Vue.component('post-list-item', require('./components/PostListItem.vue').default);
