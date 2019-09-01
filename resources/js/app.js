@@ -8,6 +8,7 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+import Buefy from 'buefy';
 
 /**
  * The following block of code may be used to automatically register your
@@ -20,7 +21,11 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
+Vue.use(Buefy);
+
 Vue.component('post-teaser', require('./components/PostTeaser.vue').default);
+Vue.component('post-list', require('./components/PostList.vue').default);
+Vue.component('post-list-item', require('./components/PostListItem.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

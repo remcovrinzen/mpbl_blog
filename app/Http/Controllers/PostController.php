@@ -22,7 +22,7 @@ class PostController extends Controller
             ->orderBy('published', 'desc')
             ->get();
 
-        return view('posts.index', ['posts' => $posts]);
+        return view('posts.index', ['posts' => $posts->toArray()]);
     }
 
     /**

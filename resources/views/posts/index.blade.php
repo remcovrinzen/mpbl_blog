@@ -1,7 +1,7 @@
 @extends ('layouts.app')
 
 @section('content')
-    <!-- {{ Breadcrumbs::render('posts') }} -->
+    {{ Breadcrumbs::render('posts') }}
 
-    {{ $posts }}
+    <post-list :posts='@json($posts)'></post-list>
 @endsection
