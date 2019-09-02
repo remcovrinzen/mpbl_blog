@@ -1,9 +1,9 @@
 <template>
-    <div class="box">
+    <div class="box" @mouseover="hover = true" @mouseleave="hover = false" :class="{'has-background-primary has-text-white': hover}">
         <div class="level">
           <div class="level-left">
             <div class="level-item">
-              <h5 class="title is-5">{{ post.title }}</h5>
+              <h5 class="title is-5" :class="{'has-text-white':hover}">{{ post.title }}</h5>
             </div>
           </div>
 
@@ -27,7 +27,7 @@
       </p>
     </div>
     </div>
-  <div class="media-right">
+  <div class="media-right text-at-bottom">
     <p>{{ post.display_published }}</p>
   </div>
 
@@ -36,6 +36,11 @@
 </template>
 <script>
   export default {
+    data() {
+      return {
+        hover:false,
+      };
+    },
     props: {
       'post': Object
     }
