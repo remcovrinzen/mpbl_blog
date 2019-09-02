@@ -2,10 +2,10 @@
 
 @section('content')
     <div class="columns">
-        @for ($i = 0; $i < 4; $i++) 
+        @foreach ($posts as $post) 
             <div class="column">
-                <post-teaser></post-teaser>
+                <post-teaser :post='@json($post)'></post-teaser>
             </div>
-            @endfor 
+        @endforeach
     </div>
 @endsection 

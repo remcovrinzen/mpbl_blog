@@ -12,10 +12,6 @@
  */
 
 #Static single pages
-Route::get('/', function () {
-    return view('index');
-})->name('index');
-
 Route::get('/overmij', function () {
     return view('overmij.index');
 })->name('overmij');
@@ -28,6 +24,8 @@ Route::get('/contact', function () {
 
 // Route::get('/admin/login', 'Auth/LoginController@index');
 // Route::get('/admin', 'Admin/AdminController@index');
+
+Route::get('/', 'IndexController@index')->name('index');
 
 Route::get('/admin/login', 'Auth\LoginController@showLoginForm')->name('login');
 // Route::post('/admin/login', 'Auth\LoginController@login');
