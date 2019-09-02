@@ -18,7 +18,7 @@ class PostController extends Controller
         $now = Carbon::now()->toDateTimeString();
 
         $posts = Post::where('published', '<=', $now)
-            ->take(20)
+            ->take(10)
             ->orderBy('published', 'desc')
             ->get();
 
