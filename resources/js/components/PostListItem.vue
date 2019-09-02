@@ -15,13 +15,11 @@
         </div>
 
   <article class="media">
-    <div>
-  <figure class="media-left">
-    <p class="image is-128x128" v-html="post.image_tag">
+     <figure class="media-left" style='width:200px;'>
+    <p class="image is-4by5" v-html="post.image_tag">
       {{ post.image_tag }}
     </p>
   </figure>
-  </div>
   <div class="media-content">
     <div class="content">
       <p>
