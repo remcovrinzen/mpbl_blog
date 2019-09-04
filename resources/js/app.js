@@ -10,6 +10,7 @@ require('./bootstrap');
 window.Vue = require('vue');
 import Buefy from 'buefy';
 import StarRating from 'vue-star-rating';
+import Datepicker from 'vuejs-datepicker';
 
 /**
  * The following block of code may be used to automatically register your
@@ -25,9 +26,12 @@ import StarRating from 'vue-star-rating';
 Vue.use(Buefy);
 
 Vue.component('star-rating', StarRating);
+Vue.component('vuejs-datepicker', Datepicker);
 Vue.component('post-teaser', require('./components/PostTeaser.vue').default);
 Vue.component('post-list', require('./components/PostList.vue').default);
 Vue.component('post-list-item', require('./components/PostListItem.vue').default);
+Vue.component('post-filter', require('./components/PostFilter.vue').default);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
