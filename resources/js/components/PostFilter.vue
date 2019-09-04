@@ -18,7 +18,7 @@
                             format='dd-MM-yyyy'
                             :clear-button="true"
                             id="van"
-                            v-model="filters.publishDate.from"
+                            v-model="filters.published.from"
                             clear-button-icon="fa fa-times"
                             @input="filterChange"></vuejs-datepicker>
         </div>
@@ -30,7 +30,7 @@
                             :clear-button="true"
                             @input='filterChange'
                             id="tot"
-                            v-model="filters.publishDate.to"
+                            v-model="filters.published.to"
                             clear-button-icon="fa fa-times"></vuejs-datepicker>
         </div>
       </div>
@@ -42,7 +42,7 @@
     data() {
       return {
         filters: {
-          publishDate: {
+          published: {
             typeFilter: "range",
             type: "Date"
           }
