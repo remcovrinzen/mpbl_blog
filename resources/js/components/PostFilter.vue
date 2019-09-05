@@ -44,12 +44,28 @@
         filters: {
           published: {
             typeFilter: "range",
-            type: "Date"
+            type: "Date",
+            from: "",
+            to: ""
           }
         }
       };
     },
+    created() {
+      this.fillInitValuesBasedOnQueryString();
+    },
     methods: {
+      fillInitValuesBasedOnQueryString() {
+        const urlParams = new URLSearchParams(window.location.search);
+
+        for (let [key, value] of urlParams.entries()) {
+          if (this.filters[key]["typeFilter"] == "range") {
+            let splitRange = value.split("-");
+            this.filters[key]["from"] = splitRange[0];
+            this.filters[key]["to"] = splitRange[1];
+          }
+        }
+      },
       filterChange() {
         let queryString = this.createQueryString(this.filters);
         window.location.href = "/posts" + queryString;
@@ -75,8 +91,9 @@
 
           if (this.filters[filter].typeFilter == "range") {
             if (
-              filters[filter]["from"] == undefined &&
-              filters[filter]["to"] == undefined
+              (filters[filter]["from"] == "" ||
+                filters[filter]["from"] == null) &&
+              (filters[filter]["to"] == "" || filters[filter]["to"] == null)
             ) {
               continue;
             }
@@ -90,22 +107,24 @@
         return filterStrings;
       },
       createRangeFilterString(filterValues) {
-        var from = "";
-        var to = "";
-
-        if (filterValues["from"] != undefined) {
-          if (filterValues["type"] == "Date") {
-            from = filterValues["from"].toLocaleDateString();
+        // Date object conversion
+        if (typeof filterValues["from"] == "object") {
+          if (filterValues["from"] != null) {
+            filterValues["from"] = filterValues["from"].toLocaleDateString();
+          } else {
+            filterValues["from"] = "";
           }
         }
 
-        if (filterValues["to"] != undefined) {
-          if (filterValues["type"] == "Date") {
-            to = filterValues["to"].toLocaleDateString();
+        if (typeof filterValues["to"] == "object") {
+          if (filterValues["to"] != null) {
+            filterValues["to"] = filterValues["to"].toLocaleDateString();
+          } else {
+            filterValues["to"] = "";
           }
         }
 
-        return from + "-" + to;
+        return filterValues["from"] + "-" + filterValues["to"];
       }
     }
   };

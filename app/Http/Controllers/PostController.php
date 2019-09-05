@@ -16,7 +16,6 @@ class PostController extends Controller
     public function index(Request $request)
     {
         $now = Carbon::now()->toDateTimeString();
-
         $posts = Post::filter($request)->where('published', '<=', $now)
             ->take(10)
             ->orderBy('published', 'desc')
