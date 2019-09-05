@@ -11,6 +11,8 @@ window.Vue = require('vue');
 import Buefy from 'buefy';
 import StarRating from 'vue-star-rating';
 import Datepicker from 'vuejs-datepicker';
+import VueSlider from 'vue-slider-component';
+import 'vue-slider-component/theme/default.css'
 
 /**
  * The following block of code may be used to automatically register your
@@ -27,6 +29,7 @@ Vue.use(Buefy);
 
 Vue.component('star-rating', StarRating);
 Vue.component('vuejs-datepicker', Datepicker);
+Vue.component('vue-slider', VueSlider);
 Vue.component('post-teaser', require('./components/PostTeaser.vue').default);
 Vue.component('post-list', require('./components/PostList.vue').default);
 Vue.component('post-list-item', require('./components/PostListItem.vue').default);

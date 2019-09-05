@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Publiceerdatum filter -->
-    <div>
+    <div class="m-b-lg">
       <div class="m-b-sm">
         <span class="icon">
           <i class="fas fa-calendar-alt"
@@ -34,6 +34,31 @@
                             clear-button-icon="fa fa-times"></vuejs-datepicker>
         </div>
       </div>
+    </div>
+
+    <!-- Rating filter -->
+    <div class="m-b-lg">
+      <div class="m-b-sm">
+        <span class="icon">
+          <i class="far fa-star"
+             aria-hidden="true"></i>
+        </span>
+        <b>Rating</b>
+      </div>
+
+      <div class="columns">
+        <div class="column">
+          <vue-slider :min=1
+                      :max=5
+                      :interval=0.25
+                      :value=[1,5]
+                      tooltip="always"
+                      tooltipPlacement="bottom">
+
+          </vue-slider>
+        </div>
+      </div>
+
     </div>
   </div>
 </template>

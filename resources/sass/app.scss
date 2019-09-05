@@ -2,11 +2,12 @@
 @import 'helpers';
 @import 'layout';
 @import 'spacing';
+@import 'overwrites';
 
-@font-face {
-    font-family: 'Bebas Neue';
-    src: url('fonts/BebasNeue-Regular.ttf') format('truetype');
-}
+// @font-face {
+//     font-family: 'Bebas Neue';
+//     src: url('fonts/BebasNeue-Regular.ttf') format('truetype');
+// }
 
 @import 'bulma_vars';
 @import '../../node_modules/bulma/bulma.sass';
