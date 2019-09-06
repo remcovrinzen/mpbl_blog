@@ -30,6 +30,7 @@ Vue.use(Buefy);
 Vue.component('star-rating', StarRating);
 Vue.component('vuejs-datepicker', Datepicker);
 Vue.component('vue-slider', VueSlider);
+Vue.component('multi-checkbox', require('./components/MultiCheckbox.vue').default);
 Vue.component('post-teaser', require('./components/PostTeaser.vue').default);
 Vue.component('post-list', require('./components/PostList.vue').default);
 Vue.component('post-list-item', require('./components/PostListItem.vue').default);

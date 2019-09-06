@@ -1,5 +1,24 @@
 <template>
   <div>
+    <!-- Titel filter -->
+    <div class="m-b-lg">
+      <div class="m-b-sm">
+        <span class="icon">
+          <i class="fas fa-search"
+             aria-hidden="true"></i>
+        </span>
+        <b>Zoek op titel</b>
+      </div>
+
+      <div class="columns">
+        <div class="column">
+          <input class="input"
+                 type="text"
+                 placeholder="Titel">
+        </div>
+      </div>
+    </div>
+
     <!-- Publiceerdatum filter -->
     <div class="m-b-lg">
       <div class="m-b-sm">
@@ -37,7 +56,7 @@
     </div>
 
     <!-- Rating filter -->
-    <div class="m-b-lg">
+    <div class="m-b-xl">
       <div class="m-b-sm">
         <span class="icon">
           <i class="far fa-star"
@@ -60,6 +79,19 @@
       </div>
 
     </div>
+
+    <!-- Categorie filter -->
+    <div class="m-b-lg">
+      <div class="m-b-sm">
+        <span class="icon">
+          <i class="fas fa-tag"
+             aria-hidden="true"></i>
+        </span>
+        <b>Categorie</b>
+      </div>
+
+      <multi-checkbox :options=test></multi-checkbox>
+    </div>
   </div>
 </template>
 <script>
@@ -73,7 +105,17 @@
             from: "",
             to: ""
           }
-        }
+        },
+        test: [
+          { name: "Recensie", code: 1 },
+          { name: "Behind the scenes", code: 2 },
+          { name: "Boekreleases", code: 3 },
+          { name: "Winacties", code: 4 },
+          { name: "Interview", code: 5 },
+          { name: "Blogtour", code: 6 },
+          { name: "Wrap-up", code: 7 },
+          { name: "Evenement", code: 6 }
+        ]
       };
     },
     created() {
