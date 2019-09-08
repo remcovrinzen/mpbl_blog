@@ -108,6 +108,18 @@
                       v-model="filters.category.value"
                       @input="filterChange"></multi-checkbox>
     </div>
+
+    <div class="columns is-centered">
+      <div class="column is-half">
+        <a class="button is-primary"
+           href="/posts">
+          <span class="icon">
+            <i class="fas fa-eraser"></i>
+          </span>
+          <span>Wis alle filters</span>
+        </a>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -144,8 +156,6 @@
       };
     },
     created() {
-      // let emptyArray = new Array(this.postCategories.length).fill(0);
-      // this.$set(this.filters["category"], "value", emptyArray);
       this.fillInitValuesBasedOnQueryString();
     },
     methods: {
