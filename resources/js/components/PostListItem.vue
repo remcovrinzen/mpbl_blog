@@ -1,12 +1,11 @@
 <template>
-  <div class="box"
+  <div class="box hover-opposite"
        @mouseover="hover = true"
-       @mouseleave="hover = false"
-       :class="{'has-background-primary has-text-white': hover}">
+       @mouseleave="hover = false">
     <div class="level">
       <div class="level-left">
         <div class="level-item">
-          <h5 class="title is-5"
+          <h5 class="title is-5 hover-opposite"
               :class="{'has-text-white':hover}">{{ post.title }}</h5>
         </div>
       </div>

@@ -2,14 +2,13 @@
 
 namespace App\Filters;
 
-class PublishedFilter extends RangeFilter
+class RatingFilter extends RangeFilter
 {
     public function filter($builder, $value)
     {
-        $varName = "published";
+        $varName = "rating";
 
         $range = $this->splitRange($value);
-        $range = $this->rangeOfStringsToDates($range);
 
         $this->addRangeToBuilder($varName, $range, $builder);
         return $builder;

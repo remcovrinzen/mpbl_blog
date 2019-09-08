@@ -21,8 +21,6 @@ class RangeFilter
         } elseif ($range[1] != "") {
             $builder->where($varname, "<=", $range[1]);
         }
-
-        return $builder;
     }
 
     public function rangeOfStringsToDates($range)

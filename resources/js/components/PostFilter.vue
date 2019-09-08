@@ -12,9 +12,22 @@
 
       <div class="columns">
         <div class="column">
-          <input class="input"
-                 type="text"
-                 placeholder="Titel">
+          <div class="field">
+            <p class="control has-icons-right">
+              <input class="input"
+                     type="text"
+                     placeholder="Titel"
+                     v-model='filters.title.value'
+                     v-on:keyup.enter="filterChange">
+              <span class="icon is-small is-right">
+                <button class="button is-primary"
+                        v-on:click="filterChange"
+                        style="pointer-events:initial">
+                  <i class="fas fa-search"></i>
+                </button>
+              </span>
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -70,10 +83,10 @@
           <vue-slider :min=1
                       :max=5
                       :interval=0.25
-                      :value=[1,5]
+                      v-model=filters.rating.range
                       tooltip="always"
-                      tooltipPlacement="bottom">
-
+                      tooltipPlacement="bottom"
+                      @drag-end='filterChange'>
           </vue-slider>
         </div>
       </div>
@@ -90,12 +103,18 @@
         <b>Categorie</b>
       </div>
 
-      <multi-checkbox :options=test></multi-checkbox>
+      <multi-checkbox :options=postCategories
+                      :init-values=filters.category.value
+                      v-model="filters.category.value"
+                      @input="filterChange"></multi-checkbox>
     </div>
   </div>
 </template>
 <script>
   export default {
+    props: {
+      postCategories: Array
+    },
     data() {
       return {
         filters: {
@@ -104,33 +123,91 @@
             type: "Date",
             from: "",
             to: ""
+          },
+          rating: {
+            typeFilter: "rangeArray",
+            range: [1, 5],
+            defaultMin: 1,
+            defaultMax: 5
+          },
+          title: {
+            typeFilter: "single",
+            type: "String",
+            value: ""
+          },
+          category: {
+            typeFilter: "multiple",
+            type: "Boolean",
+            value: []
           }
-        },
-        test: [
-          { name: "Recensie", code: 1 },
-          { name: "Behind the scenes", code: 2 },
-          { name: "Boekreleases", code: 3 },
-          { name: "Winacties", code: 4 },
-          { name: "Interview", code: 5 },
-          { name: "Blogtour", code: 6 },
-          { name: "Wrap-up", code: 7 },
-          { name: "Evenement", code: 6 }
-        ]
+        }
       };
     },
     created() {
+      // let emptyArray = new Array(this.postCategories.length).fill(0);
+      // this.$set(this.filters["category"], "value", emptyArray);
       this.fillInitValuesBasedOnQueryString();
     },
     methods: {
+      addZeroFieldToArray(array, key) {
+        array.forEach(function(element) {
+          element[key] = 0;
+        });
+      },
+      rangeArrayFilterIsDefaultValue(filter) {
+        return (
+          filter["range"][0] == filter["defaultMin"] &&
+          filter["range"][1] == filter["defaultMax"]
+        );
+      },
+      rangeFilterIsDefaultValue(filter) {
+        return (
+          (filter["from"] == "" || filter["from"] == null) &&
+          (filter["to"] == "" || filter["to"] == null)
+        );
+      },
+      assignRangeValueToFilter(key, value) {
+        let splitRange = value.split("-");
+        this.filters[key]["from"] = splitRange[0];
+        this.filters[key]["to"] = splitRange[1];
+      },
+      assignRangeArrayValueToFilter(key, value) {
+        let splitRange = value.split("-");
+        this.filters[key]["range"][0] = splitRange[0];
+        this.filters[key]["range"][1] = splitRange[1];
+      },
+      assignMultipleValueToFilter(key, value) {
+        let splitMultiple = value.split(",");
+
+        var _this = this;
+        splitMultiple.forEach(function(checked) {
+          _this.$set(
+            _this.filters[key]["value"],
+            _this.filters[key]["value"].length,
+            checked
+          );
+        });
+      },
       fillInitValuesBasedOnQueryString() {
         const urlParams = new URLSearchParams(window.location.search);
 
         for (let [key, value] of urlParams.entries()) {
-          if (this.filters[key]["typeFilter"] == "range") {
-            let splitRange = value.split("-");
-            this.filters[key]["from"] = splitRange[0];
-            this.filters[key]["to"] = splitRange[1];
+          let currentFilter = this.filters[key];
+          if (currentFilter["typeFilter"] == "range") {
+            this.assignRangeValueToFilter(key, value);
+            continue;
+          } else if (currentFilter["typeFilter"] == "rangeArray") {
+            this.assignRangeArrayValueToFilter(key, value);
+            continue;
+          } else if (currentFilter["typeFilter"] == "multiple") {
+            this.assignMultipleValueToFilter(
+              key,
+              value,
+              this.filters[key]["value"]
+            );
+            continue;
           }
+          this.filters[key]["value"] = value;
         }
       },
       filterChange() {
@@ -154,24 +231,54 @@
         var filterStrings = [];
 
         for (var filter in this.filters) {
+          var currentFilter = this.filters[filter];
           var filterString = filter + "=";
 
-          if (this.filters[filter].typeFilter == "range") {
-            if (
-              (filters[filter]["from"] == "" ||
-                filters[filter]["from"] == null) &&
-              (filters[filter]["to"] == "" || filters[filter]["to"] == null)
-            ) {
+          if (currentFilter["typeFilter"] == "range") {
+            if (this.rangeFilterIsDefaultValue(currentFilter)) {
               continue;
             }
 
-            filterString += this.createRangeFilterString(this.filters[filter]);
+            filterString += this.createRangeFilterString(currentFilter);
+          } else if (currentFilter["typeFilter"] == "rangeArray") {
+            if (this.rangeArrayFilterIsDefaultValue(currentFilter)) {
+              continue;
+            }
+
+            filterString += this.createRangeArrayFilterString(
+              currentFilter["range"]
+            );
+          } else if (currentFilter["typeFilter"] == "single") {
+            if (currentFilter["value"] == "") {
+              continue;
+            }
+
+            let value = currentFilter["value"];
+
+            if (currentFilter["type"] == "String") {
+              value = encodeURIComponent(value);
+            }
+
+            filterString += value;
+          } else if (currentFilter["typeFilter"] == "multiple") {
+            let stringToAdd = this.createMultipleFilterString(
+              currentFilter["value"]
+            );
+
+            if (stringToAdd == "") {
+              continue;
+            }
+
+            filterString += stringToAdd;
           }
 
           filterStrings.push(filterString);
         }
 
         return filterStrings;
+      },
+      createRangeArrayFilterString(rangeArray) {
+        return rangeArray[0] + "-" + rangeArray[1];
       },
       createRangeFilterString(filterValues) {
         // Date object conversion
@@ -192,6 +299,10 @@
         }
 
         return filterValues["from"] + "-" + filterValues["to"];
+      },
+
+      createMultipleFilterString(values) {
+        return values.join(",");
       }
     }
   };

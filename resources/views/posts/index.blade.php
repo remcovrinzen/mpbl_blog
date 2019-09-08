@@ -6,7 +6,7 @@
 
 <div class="columns">
     <div class="column is-one-quarter">
-        <post-filter></post-filter>
+        <post-filter :post-categories='@json($postCategories)'></post-filter>
     </div>
 
     <div class="column is-three-quarters">

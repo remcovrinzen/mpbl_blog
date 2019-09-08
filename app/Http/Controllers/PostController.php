@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\PostCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
@@ -21,7 +22,8 @@ class PostController extends Controller
             ->orderBy('published', 'desc')
             ->get();
 
-        return view('posts.index', ['posts' => $posts->toArray()]);
+        $postCategories = PostCategory::get();
+        return view('posts.index', ['posts' => $posts->toArray(), "postCategories" => $postCategories->toArray()]);
     }
 
     /**

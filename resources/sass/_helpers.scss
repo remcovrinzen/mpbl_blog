@@ -13,3 +13,13 @@
 .text-at-bottom {
     margin-top: auto;
 }
+
+.hover-opposite:hover {
+    background-color: $primary;
+    color: white;
+}
+
+.hover-primary:hover {
+    background-color: white;
+    color: $primary;
+}
