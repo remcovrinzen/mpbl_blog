@@ -3,19 +3,19 @@
         <div class="level">
             <!-- <div class="level-left"> -->
             <div class="level-item">
-                Copyright © 2019
+                © 2019 - MyPerfectBookLife
             </div>
             <!-- </div> -->
 
             <!-- <div class="level-right"> -->
             <div class="level-item">
-                Terms
+                Algemene voorwaarden
             </div>
 
             <div class="level-item">
-                Privacy policy
+                <a class="is-link" href="/files/Privacybeleid.docx">Privacy beleid</a>
             </div>
             <!-- </div> -->
         </div>
     </div>
-</footer> 
+</footer>
