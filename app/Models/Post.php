@@ -5,10 +5,13 @@ namespace App\Models;
 use App\Filters\PostFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use GeneaLabs\LaravelModelCaching\Traits\Cachable;
 use Carbon\Carbon;
 
 class Post extends Model
 {
+    use Cachable;
+
     protected $table = 'posts';
     protected $appends = ['content_summary', 'display_published'];
 
