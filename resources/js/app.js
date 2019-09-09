@@ -5,14 +5,15 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
-
-window.Vue = require('vue');
 import Buefy from 'buefy';
 import StarRating from 'vue-star-rating';
 import Datepicker from 'vuejs-datepicker';
 import VueSlider from 'vue-slider-component';
-import 'vue-slider-component/theme/default.css'
+import 'vue-slider-component/theme/default.css';
+
+require('./bootstrap');
+
+window.Vue = require('vue');
 
 /**
  * The following block of code may be used to automatically register your
@@ -35,6 +36,7 @@ Vue.component('post-teaser', require('./components/PostTeaser.vue').default);
 Vue.component('post-list', require('./components/PostList.vue').default);
 Vue.component('post-list-item', require('./components/PostListItem.vue').default);
 Vue.component('post-filter', require('./components/PostFilter.vue').default);
+Vue.component('post-sort', require('./components/PostSort.vue').default);
 
 
 /**
@@ -44,5 +46,5 @@ Vue.component('post-filter', require('./components/PostFilter.vue').default);
  */
 
 const app = new Vue({
-    el: '#app'
+  el: '#app',
 });

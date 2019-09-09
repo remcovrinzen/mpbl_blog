@@ -6,6 +6,7 @@ use App\Models\Post;
 use App\Models\PostCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use App\Http\Controllers\Helper;
 
 class PostController extends Controller
 {
@@ -16,14 +17,16 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
+        $sortMethod = $this->getPostSort($request);
+
         $now = Carbon::now()->toDateTimeString();
-        $posts = Post::filter($request)->where('published', '<=', $now)
-            ->take(10)
-            ->orderBy('published', 'desc')
-            ->get();
+        $allPosts = Post::filter($request)->where('published', '<=', $now);
+        $numberOfPosts = $allPosts->count();
+
+        $shownPosts = $allPosts->take(10)->orderBy($sortMethod["variable"], $sortMethod["way"])->get();
 
         $postCategories = PostCategory::get();
-        return view('posts.index', ['posts' => $posts->toArray(), "postCategories" => $postCategories->toArray()]);
+        return view('posts.index', ['posts' => $shownPosts->toArray(), "postCategories" => $postCategories->toArray(), "numberOfPosts" => $numberOfPosts]);
     }
 
     /**
@@ -90,5 +93,16 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         //
+    }
+
+    public function getPostSort($request)
+    {
+        $sortMethod = Helper::getDefaultPostSort();
+
+        if ($request->query('sort') != null) {
+            $sortMethod = Helper::splitSortQuery($request->query('sort'));
+        }
+
+        return $sortMethod;
     }
 }

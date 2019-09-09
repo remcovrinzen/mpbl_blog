@@ -202,6 +202,10 @@
         const urlParams = new URLSearchParams(window.location.search);
 
         for (let [key, value] of urlParams.entries()) {
+          if (key == "sort") {
+            continue;
+          }
+
           let currentFilter = this.filters[key];
           if (currentFilter["typeFilter"] == "range") {
             this.assignRangeValueToFilter(key, value);
@@ -221,42 +225,40 @@
         }
       },
       filterChange() {
-        let queryString = this.createQueryString(this.filters);
-        window.location.href = "/posts" + queryString;
+        let new_url = this.createNewUrl(this.filters);
+        window.location.href = new_url;
       },
-      createQueryString() {
-        var queryString = "";
+      createNewUrl() {
+        let url = new URL(window.location.href);
+        var query_string = url.search;
+        var search_params = new URLSearchParams(query_string);
+        var search_params = this.setQueryParams(search_params);
+        url.search = search_params.toString();
+        var new_url = url.toString();
 
-        var filterStrings = this.buildFilterStringArray(this.filters);
-
-        if (filterStrings.length > 0) {
-          queryString = "?";
-        }
-
-        queryString += filterStrings.join("&");
-
-        return queryString;
+        return new_url;
       },
-      buildFilterStringArray(filters) {
-        var filterStrings = [];
-
+      setQueryParams(search_params) {
         for (var filter in this.filters) {
           var currentFilter = this.filters[filter];
-          var filterString = filter + "=";
 
           if (currentFilter["typeFilter"] == "range") {
             if (this.rangeFilterIsDefaultValue(currentFilter)) {
               continue;
             }
 
-            filterString += this.createRangeFilterString(currentFilter);
+            search_params.set(
+              filter,
+              this.createRangeFilterString(currentFilter)
+            );
           } else if (currentFilter["typeFilter"] == "rangeArray") {
             if (this.rangeArrayFilterIsDefaultValue(currentFilter)) {
               continue;
             }
 
-            filterString += this.createRangeArrayFilterString(
-              currentFilter["range"]
+            search_params.set(
+              filter,
+              this.createRangeArrayFilterString(currentFilter["range"])
             );
           } else if (currentFilter["typeFilter"] == "single") {
             if (currentFilter["value"] == "") {
@@ -269,23 +271,21 @@
               value = encodeURIComponent(value);
             }
 
-            filterString += value;
+            search_params.set(filter, value);
           } else if (currentFilter["typeFilter"] == "multiple") {
             let stringToAdd = this.createMultipleFilterString(
               currentFilter["value"]
             );
 
-            if (stringToAdd == "") {
+            if (currentFilter["value"].length == 0) {
               continue;
             }
 
-            filterString += stringToAdd;
+            search_params.set(filter, currentFilter["value"]);
           }
-
-          filterStrings.push(filterString);
         }
 
-        return filterStrings;
+        return search_params;
       },
       createRangeArrayFilterString(rangeArray) {
         return rangeArray[0] + "-" + rangeArray[1];
@@ -313,6 +313,16 @@
 
       createMultipleFilterString(values) {
         return values.join(",");
+      },
+      getSortQueryString() {
+        let url = new URL(window.location.href);
+        let sort = url.searchParams.get("sort");
+
+        if (sort != null) {
+          return "?sort=" + sort;
+        }
+
+        return "";
       }
     }
   };

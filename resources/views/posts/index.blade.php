@@ -10,12 +10,27 @@
     </div>
 
     <div class="column is-three-quarters">
-        <section class="container">
-            <h1 class="title m-b-md">
-                Posts
-            </h1>
-        </section>
+        <div class="level">
+            <!-- Left side -->
+            <div class="level-left">
+                <div class="level-item">
+                    <p class="subtitle is-5">
+                        <h1 class="title m-b-md">
+                            Posts
+                        </h1>
+                    </p>
+                </div>
+            </div>
 
+            <!-- Right side -->
+            <div class="level-right">
+                <p class="level-item"><strong>{{ $numberOfPosts }}</strong>&nbsp; resultaten</p>
+                <p class="level-item">
+                    Sorteren op: &nbsp;
+                    <post-sort></post-sort>
+                </p>
+            </div>
+        </div>
         <post-list :posts='@json($posts)'></post-list>
     </div>
 </div>
