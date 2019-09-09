@@ -241,11 +241,14 @@ export default {
       return newUrl;
     },
     setQueryParams(searchParams) {
+      searchParams.delete("page");
+
       for (const filter in this.filters) {
         const currentFilter = this.filters[filter];
 
         if (currentFilter.typeFilter === 'range') {
           if (this.rangeFilterIsDefaultValue(currentFilter)) {
+            searchParams.delete(filter);
             continue;
           }
 
@@ -255,6 +258,7 @@ export default {
           );
         } else if (currentFilter.typeFilter === 'rangeArray') {
           if (this.rangeArrayFilterIsDefaultValue(currentFilter)) {
+            searchParams.delete(filter);
             continue;
           }
 
@@ -264,18 +268,15 @@ export default {
           );
         } else if (currentFilter.typeFilter === 'single') {
           if (currentFilter.value === '') {
+            searchParams.delete(filter);
             continue;
           }
-
           let { value } = currentFilter;
-
-          if (currentFilter.type === 'String') {
-            value = encodeURIComponent(value);
-          }
 
           searchParams.set(filter, value);
         } else if (currentFilter.typeFilter === 'multiple') {
           if (currentFilter.value.length === 0) {
+            searchParams.delete(filter);
             continue;
           }
 

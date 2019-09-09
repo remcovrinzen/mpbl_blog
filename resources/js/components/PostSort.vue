@@ -40,6 +40,8 @@ export default {
       if (searchParams.get('sort') === this.defaultSort) {
         searchParams.delete('sort');
       }
+      searchParams.delete('page');
+
       url.search = searchParams.toString();
       const newUrl = url.toString();
       window.location.href = newUrl;

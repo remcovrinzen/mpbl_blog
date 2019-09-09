@@ -23,10 +23,14 @@ class PostController extends Controller
         $allPosts = Post::filter($request)->where('published', '<=', $now);
         $numberOfPosts = $allPosts->count();
 
-        $shownPosts = $allPosts->take(10)->orderBy($sortMethod["variable"], $sortMethod["way"])->get();
+        $pagerPosts = $allPosts
+            ->orderBy($sortMethod["variable"], $sortMethod["way"])
+            ->paginate(10);
+
+        $pagerPosts = Helper::appendAllQueryParams($pagerPosts, $request->query());
 
         $postCategories = PostCategory::get();
-        return view('posts.index', ['posts' => $shownPosts->toArray(), "postCategories" => $postCategories->toArray(), "numberOfPosts" => $numberOfPosts]);
+        return view('posts.index', ['pagerPosts' => $pagerPosts, "postCategories" => $postCategories->toArray(), "numberOfPosts" => $numberOfPosts]);
     }
 
     /**

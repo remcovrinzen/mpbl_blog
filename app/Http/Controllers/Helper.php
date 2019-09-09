@@ -14,4 +14,15 @@ class Helper
     {
         return ['variable' => "published", 'way' => "desc"];
     }
+
+    public static function appendAllQueryParams($pager, $parameters)
+    {
+        foreach ($parameters as $key => $value) {
+            if ($key != "page") {
+                $pager->appends($key, $value);
+            }
+        };
+
+        return $pager;
+    }
 }

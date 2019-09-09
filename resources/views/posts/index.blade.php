@@ -31,7 +31,8 @@
                 </p>
             </div>
         </div>
-        <post-list :posts='@json($posts)'></post-list>
+        <post-list :posts='@json($pagerPosts->items())'></post-list>
+        {{ $pagerPosts->links()}}
     </div>
 </div>
 @endsection
