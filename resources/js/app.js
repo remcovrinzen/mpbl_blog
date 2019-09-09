@@ -13,7 +13,7 @@ import 'vue-slider-component/theme/default.css';
 
 require('./bootstrap');
 
-window.Vue = require('vue');
+const Vue = require('vue');
 
 /**
  * The following block of code may be used to automatically register your
@@ -45,6 +45,7 @@ Vue.component('post-sort', require('./components/PostSort.vue').default);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+// eslint-disable-next-line no-unused-vars
 const app = new Vue({
   el: '#app',
 });
