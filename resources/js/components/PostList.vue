@@ -6,9 +6,9 @@
   </div>
 </template>
 <script>
-  export default {
-    props: {
-      posts: Array
-    }
-  };
+export default {
+  props: {
+    posts: Array,
+  },
+};
 </script>

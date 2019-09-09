@@ -1,5 +1,6 @@
 <template>
-  <div class="card" @mouseover="hover = true" @mouseleave="hover = false" :class="{'hovered': hover}">
+  <div class="card" @mouseover="hover = true" @mouseleave="hover = false"
+   :class="{'hovered': hover}">
     <div class="card-header">
       <div class="card-header-title">
         {{ post.title }}
@@ -16,7 +17,8 @@
       <div class="level">
         <div class="level-left">
           <div class="level-item">
-            <star-rating :increment=0.25 :read-only='true' :rating='post.rating' :star-size=20  :show-rating='false' v-if=post.rating></star-rating>
+            <star-rating :increment=0.25 :read-only='true' :rating='post.rating' :star-size=20  :show-rating='false'
+             v-if=post.rating></star-rating>
           </div>
         </div>
         <div class="level-right">
@@ -27,16 +29,16 @@
   </div>
 </template>
 <script>
-  export default {
-    data() {
-      return {
-        hover:false,
-      };
-    },
-    props: {
-      'post': Object
-    }
-  }
+export default {
+  data() {
+    return {
+      hover: false,
+    };
+  },
+  props: {
+    post: Object,
+  },
+};
 </script>
 <style scoped>
   .card {
@@ -47,4 +49,3 @@
   opacity: 0.5;
 }
 </style>
-

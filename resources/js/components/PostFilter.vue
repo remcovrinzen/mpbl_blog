@@ -123,209 +123,207 @@
   </div>
 </template>
 <script>
-  export default {
-    props: {
-      postCategories: Array
+export default {
+  props: {
+    postCategories: Array,
+  },
+  data() {
+    return {
+      filters: {
+        published: {
+          typeFilter: 'range',
+          type: 'Date',
+          from: '',
+          to: '',
+        },
+        rating: {
+          typeFilter: 'rangeArray',
+          range: [1, 5],
+          defaultMin: 1,
+          defaultMax: 5,
+        },
+        title: {
+          typeFilter: 'single',
+          type: 'String',
+          value: '',
+        },
+        category: {
+          typeFilter: 'multiple',
+          type: 'Boolean',
+          value: [],
+        },
+      },
+    };
+  },
+  created() {
+    this.fillInitValuesBasedOnQueryString();
+  },
+  methods: {
+    addZeroFieldToArray(array, key) {
+      array.forEach((element) => {
+        element[key] = 0;
+      });
     },
-    data() {
-      return {
-        filters: {
-          published: {
-            typeFilter: "range",
-            type: "Date",
-            from: "",
-            to: ""
-          },
-          rating: {
-            typeFilter: "rangeArray",
-            range: [1, 5],
-            defaultMin: 1,
-            defaultMax: 5
-          },
-          title: {
-            typeFilter: "single",
-            type: "String",
-            value: ""
-          },
-          category: {
-            typeFilter: "multiple",
-            type: "Boolean",
-            value: []
-          }
-        }
-      };
+    rangeArrayFilterIsDefaultValue(filter) {
+      return (
+        filter.range[0] === filter.defaultMin
+          && filter.range[1] === filter.defaultMax
+      );
     },
-    created() {
-      this.fillInitValuesBasedOnQueryString();
+    rangeFilterIsDefaultValue(filter) {
+      return (
+        (filter.from === '' || filter.from === null)
+          && (filter.to === '' || filter.to === null)
+      );
     },
-    methods: {
-      addZeroFieldToArray(array, key) {
-        array.forEach(function(element) {
-          element[key] = 0;
-        });
-      },
-      rangeArrayFilterIsDefaultValue(filter) {
-        return (
-          filter["range"][0] == filter["defaultMin"] &&
-          filter["range"][1] == filter["defaultMax"]
-        );
-      },
-      rangeFilterIsDefaultValue(filter) {
-        return (
-          (filter["from"] == "" || filter["from"] == null) &&
-          (filter["to"] == "" || filter["to"] == null)
-        );
-      },
-      assignRangeValueToFilter(key, value) {
-        let splitRange = value.split("-");
-        this.filters[key]["from"] = splitRange[0];
-        this.filters[key]["to"] = splitRange[1];
-      },
-      assignRangeArrayValueToFilter(key, value) {
-        let splitRange = value.split("-");
-        this.filters[key]["range"][0] = splitRange[0];
-        this.filters[key]["range"][1] = splitRange[1];
-      },
-      assignMultipleValueToFilter(key, value) {
-        let splitMultiple = value.split(",");
+    assignRangeValueToFilter(key, value) {
+      const splitRange = value.split('-');
+      const [from, to] = splitRange;
+      this.filters[key].from = from;
+      this.filters[key].to = to;
+    },
+    assignRangeArrayValueToFilter(key, value) {
+      const splitRange = value.split('-');
+      const [from, to] = splitRange;
+      this.filters[key].range[0] = from;
+      this.filters[key].range[1] = to;
+    },
+    assignMultipleValueToFilter(key, value) {
+      const splitMultiple = value.split(',');
 
-        var _this = this;
-        splitMultiple.forEach(function(checked) {
-          _this.$set(
-            _this.filters[key]["value"],
-            _this.filters[key]["value"].length,
-            checked
+      const _this = this;
+      splitMultiple.forEach((checked) => {
+        _this.$set(
+          _this.filters[key].value,
+          _this.filters[key].value.length,
+          checked,
+        );
+      });
+    },
+    fillInitValuesBasedOnQueryString() {
+      const urlParams = new URLSearchParams(window.location.search);
+
+      for (const [key, value] of urlParams.entries()) {
+        if (key === 'sort') {
+          continue;
+        }
+
+        const currentFilter = this.filters[key];
+        if (currentFilter.typeFilter === 'range') {
+          this.assignRangeValueToFilter(key, value);
+          continue;
+        } else if (currentFilter.typeFilter === 'rangeArray') {
+          this.assignRangeArrayValueToFilter(key, value);
+          continue;
+        } else if (currentFilter.typeFilter === 'multiple') {
+          this.assignMultipleValueToFilter(
+            key,
+            value,
+            this.filters[key].value,
           );
-        });
-      },
-      fillInitValuesBasedOnQueryString() {
-        const urlParams = new URLSearchParams(window.location.search);
-
-        for (let [key, value] of urlParams.entries()) {
-          if (key == "sort") {
-            continue;
-          }
-
-          let currentFilter = this.filters[key];
-          if (currentFilter["typeFilter"] == "range") {
-            this.assignRangeValueToFilter(key, value);
-            continue;
-          } else if (currentFilter["typeFilter"] == "rangeArray") {
-            this.assignRangeArrayValueToFilter(key, value);
-            continue;
-          } else if (currentFilter["typeFilter"] == "multiple") {
-            this.assignMultipleValueToFilter(
-              key,
-              value,
-              this.filters[key]["value"]
-            );
-            continue;
-          }
-          this.filters[key]["value"] = value;
+          continue;
         }
-      },
-      filterChange() {
-        let new_url = this.createNewUrl(this.filters);
-        window.location.href = new_url;
-      },
-      createNewUrl() {
-        let url = new URL(window.location.href);
-        var query_string = url.search;
-        var search_params = new URLSearchParams(query_string);
-        var search_params = this.setQueryParams(search_params);
-        url.search = search_params.toString();
-        var new_url = url.toString();
-
-        return new_url;
-      },
-      setQueryParams(search_params) {
-        for (var filter in this.filters) {
-          var currentFilter = this.filters[filter];
-
-          if (currentFilter["typeFilter"] == "range") {
-            if (this.rangeFilterIsDefaultValue(currentFilter)) {
-              continue;
-            }
-
-            search_params.set(
-              filter,
-              this.createRangeFilterString(currentFilter)
-            );
-          } else if (currentFilter["typeFilter"] == "rangeArray") {
-            if (this.rangeArrayFilterIsDefaultValue(currentFilter)) {
-              continue;
-            }
-
-            search_params.set(
-              filter,
-              this.createRangeArrayFilterString(currentFilter["range"])
-            );
-          } else if (currentFilter["typeFilter"] == "single") {
-            if (currentFilter["value"] == "") {
-              continue;
-            }
-
-            let value = currentFilter["value"];
-
-            if (currentFilter["type"] == "String") {
-              value = encodeURIComponent(value);
-            }
-
-            search_params.set(filter, value);
-          } else if (currentFilter["typeFilter"] == "multiple") {
-            let stringToAdd = this.createMultipleFilterString(
-              currentFilter["value"]
-            );
-
-            if (currentFilter["value"].length == 0) {
-              continue;
-            }
-
-            search_params.set(filter, currentFilter["value"]);
-          }
-        }
-
-        return search_params;
-      },
-      createRangeArrayFilterString(rangeArray) {
-        return rangeArray[0] + "-" + rangeArray[1];
-      },
-      createRangeFilterString(filterValues) {
-        // Date object conversion
-        if (typeof filterValues["from"] == "object") {
-          if (filterValues["from"] != null) {
-            filterValues["from"] = filterValues["from"].toLocaleDateString();
-          } else {
-            filterValues["from"] = "";
-          }
-        }
-
-        if (typeof filterValues["to"] == "object") {
-          if (filterValues["to"] != null) {
-            filterValues["to"] = filterValues["to"].toLocaleDateString();
-          } else {
-            filterValues["to"] = "";
-          }
-        }
-
-        return filterValues["from"] + "-" + filterValues["to"];
-      },
-
-      createMultipleFilterString(values) {
-        return values.join(",");
-      },
-      getSortQueryString() {
-        let url = new URL(window.location.href);
-        let sort = url.searchParams.get("sort");
-
-        if (sort != null) {
-          return "?sort=" + sort;
-        }
-
-        return "";
+        this.filters[key].value = value;
       }
-    }
-  };
+    },
+    filterChange() {
+      const newUrl = this.createNewUrl(this.filters);
+      window.location.href = newUrl;
+    },
+    createNewUrl() {
+      const url = new URL(window.location.href);
+      const queryString = url.search;
+      let searchParams = new URLSearchParams(queryString);
+      searchParams = this.setQueryParams(searchParams);
+      url.search = searchParams.toString();
+      const newUrl = url.toString();
+
+      return newUrl;
+    },
+    setQueryParams(searchParams) {
+      for (const filter in this.filters) {
+        const currentFilter = this.filters[filter];
+
+        if (currentFilter.typeFilter === 'range') {
+          if (this.rangeFilterIsDefaultValue(currentFilter)) {
+            continue;
+          }
+
+          searchParams.set(
+            filter,
+            this.createRangeFilterString(currentFilter),
+          );
+        } else if (currentFilter.typeFilter === 'rangeArray') {
+          if (this.rangeArrayFilterIsDefaultValue(currentFilter)) {
+            continue;
+          }
+
+          searchParams.set(
+            filter,
+            this.createRangeArrayFilterString(currentFilter.range),
+          );
+        } else if (currentFilter.typeFilter === 'single') {
+          if (currentFilter.value === '') {
+            continue;
+          }
+
+          let { value } = currentFilter;
+
+          if (currentFilter.type === 'String') {
+            value = encodeURIComponent(value);
+          }
+
+          searchParams.set(filter, value);
+        } else if (currentFilter.typeFilter === 'multiple') {
+          if (currentFilter.value.length === 0) {
+            continue;
+          }
+
+          searchParams.set(filter, currentFilter.value);
+        }
+      }
+
+      return searchParams;
+    },
+    createRangeArrayFilterString(rangeArray) {
+      return `${rangeArray[0]}-${rangeArray[1]}`;
+    },
+    createRangeFilterString(filterValues) {
+      // Date object conversion
+      if (typeof filterValues.from === 'object') {
+        if (filterValues.from != null) {
+          filterValues.from = filterValues.from.toLocaleDateString();
+        } else {
+          filterValues.from = '';
+        }
+      }
+
+      if (typeof filterValues.to === 'object') {
+        if (filterValues.to != null) {
+          filterValues.to = filterValues.to.toLocaleDateString();
+        } else {
+          filterValues.to = '';
+        }
+      }
+
+      return `${filterValues.from}-${filterValues.to}`;
+    },
+
+    createMultipleFilterString(values) {
+      return values.join(',');
+    },
+    getSortQueryString() {
+      const url = new URL(window.location.href);
+      const sort = url.searchParams.get('sort');
+
+      if (sort != null) {
+        return `?sort=${sort}`;
+      }
+
+      return '';
+    },
+  },
+};
 </script>
 <style>
   .width-is-85 {

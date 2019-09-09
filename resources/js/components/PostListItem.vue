@@ -32,7 +32,8 @@
       <div class="media-content">
         <div class="content">
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut.
+            Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.
           </p>
         </div>
       </div>
@@ -44,14 +45,14 @@
   </div>
 </template>
 <script>
-  export default {
-    data() {
-      return {
-        hover: false
-      };
-    },
-    props: {
-      post: Object
-    }
-  };
+export default {
+  data() {
+    return {
+      hover: false,
+    };
+  },
+  props: {
+    post: Object,
+  },
+};
 </script>

@@ -13,21 +13,21 @@
   </div>
 </template>
 <script>
-  export default {
-    data() {
-      return {
-        values: this.initValues
-      };
+export default {
+  data() {
+    return {
+      values: this.initValues,
+    };
+  },
+  props: {
+    options: Array,
+    initValues: Array,
+    index: String,
+  },
+  methods: {
+    emitClick() {
+      this.$emit('input', this.values);
     },
-    props: {
-      options: Array,
-      initValues: Array,
-      index: String
-    },
-    methods: {
-      emitClick() {
-        this.$emit("input", this.values);
-      }
-    }
-  };
+  },
+};
 </script>

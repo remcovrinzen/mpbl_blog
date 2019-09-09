@@ -19,5 +19,8 @@
     "plugins": [
         "vue"
     ],
-    "rules": {}
+    "rules": {
+        "no-underscore-dangle": "off",
+        "no-continue": "off"
+    }
 }
