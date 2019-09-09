@@ -2,22 +2,17 @@
   <div class="box hover-opposite"
        @mouseover="hover = true"
        @mouseleave="hover = false">
-    <div class="level">
-      <div class="level-left">
-        <div class="level-item">
+    <div class="columns">
+      <div class="column" :class="{'is-three-quarters': post.rating}">
           <h5 class="title is-5 hover-opposite"
               :class="{'has-text-white':hover}">{{ post.title }}</h5>
-        </div>
       </div>
 
-      <div class="level-right">
-        <div class="level-item"
-             v-if='post.rating'>
+      <div class="column is-one-quarter" v-if='post.rating'>
           <star-rating :increment=0.25
                        :read-only='true'
                        :rating='post.rating'
                        :star-size=40></star-rating>
-        </div>
       </div>
     </div>
 
