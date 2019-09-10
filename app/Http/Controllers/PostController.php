@@ -20,11 +20,19 @@ class PostController extends Controller
         $sortMethod = $this->getPostSort($request);
 
         $now = Carbon::now()->toDateTimeString();
-        $allPosts = Post::filter($request)->where('published', '<=', $now);
+        $allPosts = Post::leftJoin('reviews',  'posts.post_id', '=', 'reviews.post_id')
+            ->select('posts.*')
+            ->filter($request)
+            ->where('published', '<=', $now);
         $numberOfPosts = $allPosts->count();
+
+        if ($sortMethod["variable"] == 'rating') {
+            $sortMethod["variable"] = 'reviews.rating';
+        };
 
         $pagerPosts = $allPosts
             ->orderBy($sortMethod["variable"], $sortMethod["way"])
+            ->with('review:post_id,rating,book_summary')
             ->paginate(10);
 
         $pagerPosts = Helper::appendAllQueryParams($pagerPosts, $request->query());

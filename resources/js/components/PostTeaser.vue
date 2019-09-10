@@ -16,9 +16,9 @@
     <div class="card-content">
       <div class="level">
         <div class="level-left">
-          <div class="level-item">
-            <star-rating :increment=0.25 :read-only='true' :rating='post.rating' :star-size=20  :show-rating='false'
-             v-if=post.rating></star-rating>
+          <div class="level-item" v-if="post.review">
+            <star-rating :increment=0.25 :read-only='true' :rating='post.review.rating' :star-size=20  :show-rating='false'
+             v-if=post.review.rating></star-rating>
           </div>
         </div>
         <div class="level-right">

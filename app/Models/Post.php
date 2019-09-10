@@ -14,6 +14,7 @@ class Post extends Model
 
     protected $table = 'posts';
     protected $appends = ['content_summary', 'display_published'];
+    protected $primaryKey = 'post_id';
 
     public function getContentSummaryAttribute()
     {
@@ -29,5 +30,10 @@ class Post extends Model
     public function scopeFilter(Builder $builder, $request)
     {
         return (new PostFilter($request))->filter($builder);
+    }
+
+    public function review()
+    {
+        return $this->hasOne('App\Models\Review', 'post_id');
     }
 }

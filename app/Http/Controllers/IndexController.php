@@ -12,7 +12,8 @@ class IndexController extends Controller
     {
         $now = Carbon::now()->toDateTimeString();
 
-        $posts = Post::where('published', '<=', $now)
+        $posts = Post::with('review:post_id,rating')
+            ->where('published', '<=', $now)
             ->take(4)
             ->orderBy('published', 'desc')
             ->get();

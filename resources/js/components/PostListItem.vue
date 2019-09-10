@@ -3,16 +3,16 @@
        @mouseover="hover = true"
        @mouseleave="hover = false">
     <div class="columns">
-      <div class="column" :class="{'is-three-quarters': post.rating}">
+      <div class="column" :class="{'is-three-quarters': post.review}">
           <h5 class="title is-5 hover-opposite"
               :class="{'has-text-white':hover}">{{ post.title }}</h5>
       </div>
 
-      <div class="column is-one-quarter" v-if='post.rating'>
+      <div class="column is-one-quarter" v-if='post.review'>
           <star-rating :increment=0.25
                        :read-only='true'
-                       :rating='post.rating'
-                       :star-size=40></star-rating>
+                       :rating='post.review.rating'
+                       :star-size=40 v-if="post.review.rating"></star-rating>
       </div>
     </div>
 
@@ -26,9 +26,8 @@
       </figure>
       <div class="media-content">
         <div class="content">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut.
-            Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.
+          <p v-if="post.review" v-html="post.review.book_summary">
+           {{ post.review.book_summary }}
           </p>
         </div>
       </div>

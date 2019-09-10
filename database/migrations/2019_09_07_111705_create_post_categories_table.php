@@ -14,7 +14,8 @@ class CreatePostCategoriesTable extends Migration
     public function up()
     {
         Schema::create('post_categories', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('cat_id');
+            $table->string('name');
         });
     }
 
